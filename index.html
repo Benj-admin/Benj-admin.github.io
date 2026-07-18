@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Set the theme before first paint to avoid a flash of the wrong theme. -->
+  <script>
+    document.documentElement.dataset.theme =
+      localStorage.getItem("theme") ||
+      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  </script>
+
+  <title>Benjamin Gras — AI Engineer</title>
+  <meta name="description" content="Benjamin Gras — AI Engineer. MSc Artificial Intelligence at Imperial College London, École Polytechnique graduate.">
+
+  <!-- Canonical URL of the site. -->
+  <link rel="canonical" href="https://benj-admin.github.io/">
+
+  <!-- Open Graph (LinkedIn, Slack, WhatsApp, iMessage, Discord…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Benjamin Gras — AI Engineer">
+  <meta property="og:description" content="AI Engineer. MSc Artificial Intelligence at Imperial College London, École Polytechnique graduate. Try the in-browser AI Lab.">
+  <meta property="og:url" content="https://benj-admin.github.io/">
+  <meta property="og:locale" content="en_GB">
+  <!-- Drop a 1200×630 image at assets/og-image.png (a branded name card is enough — no photo needed), then uncomment: -->
+  <!-- <meta property="og:image" content="https://benj-admin.github.io/assets/og-image.png"> -->
+
+  <!-- Twitter/X card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Benjamin Gras — AI Engineer">
+  <meta name="twitter:description" content="AI Engineer. MSc Artificial Intelligence at Imperial College London, École Polytechnique graduate.">
+
+  <!-- Browser UI color on mobile -->
+  <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101014" media="(prefers-color-scheme: dark)">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%233b5bdb'/><text x='50' y='69' font-family='Georgia, serif' font-size='56' font-weight='700' fill='white' text-anchor='middle'>BG</text></svg>">
+
+  <!-- Structured data: helps Google link this site to you (Knowledge Graph). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Benjamin Gras",
+    "url": "https://benj-admin.github.io/",
+    "jobTitle": "AI Engineer",
+    "alumniOf": ["École Polytechnique", "Imperial College London"],
+    "knowsLanguage": ["en", "fr", "de"],
+    "sameAs": [
+      "https://www.linkedin.com/in/benjamin-gras-37bb97239/",
+      "https://github.com/Benj-admin"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="nav-name">Benjamin Gras</a>
+    <nav class="nav-links" id="nav-links">
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
+      <a href="#education" data-i18n="nav.education">Education</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#lab" data-i18n="nav.lab">AI Lab</a>
+      <a href="game.html" data-i18n="nav.game">Game</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+        <button data-lang="en">EN</button>
+        <button data-lang="fr">FR</button>
+        <button data-lang="de">DE</button>
+      </div>
+      <button id="theme-toggle" class="pill" aria-label="Toggle theme">☾</button>
+      <button id="nav-toggle" class="pill nav-burger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="hero-kicker reveal" data-i18n="hero.kicker">Paris · London</p>
+      <h1 class="hero-title reveal">Benjamin Gras</h1>
+      <p class="hero-sub reveal" data-i18n="hero.sub">
+        MSc Artificial Intelligence student at Imperial College London,
+        École Polytechnique graduate.
+      </p>
+      <div class="hero-cta reveal">
+        <a href="#contact" class="btn btn-primary" data-i18n="hero.cta1">Get in touch</a>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <h2 class="section-title reveal" data-i18n="sec.experience">Experience</h2>
+      <div class="timeline" id="experience-list"></div>
+    </section>
+
+    <section id="education" class="section">
+      <h2 class="section-title reveal" data-i18n="sec.education">Education</h2>
+      <div class="cards" id="education-list"></div>
+    </section>
+
+    <section id="projects" class="section">
+      <h2 class="section-title reveal" data-i18n="sec.projects">Projects</h2>
+      <div class="cards" id="projects-list"></div>
+    </section>
+
+    <section id="lab" class="section">
+      <h2 class="section-title reveal" data-i18n="sec.lab">AI Lab</h2>
+      <p class="lab-intro reveal" data-i18n="lab.intro">
+        Ask my profile a question in natural language. A sentence-embedding model
+        runs entirely in your browser, ranks every passage of this site by cosine
+        similarity, and shows you the retrieval step of a RAG pipeline — live.
+      </p>
+      <div class="lab-box reveal">
+        <div id="lab-start">
+          <button id="lab-load" class="btn btn-primary" data-i18n="lab.load">Launch the demo (~100 MB model, cached)</button>
+          <p class="lab-note" data-i18n="lab.note">Runs 100% locally — your questions never leave your machine.</p>
+        </div>
+        <div id="lab-progress" hidden>
+          <div class="progress"><div class="progress-fill" id="lab-progress-fill"></div></div>
+          <p class="lab-note" id="lab-progress-text"></p>
+        </div>
+        <div id="lab-ui" hidden>
+          <div class="lab-pipeline">
+            <span class="pstep" data-i18n="lab.step1">1 · Embed question</span>
+            <span class="pstep" data-i18n="lab.step2">2 · Similarity scoring</span>
+            <span class="pstep" data-i18n="lab.step3">3 · Top passages</span>
+          </div>
+          <div class="score-modes">
+            <span class="lab-note" data-i18n="lab.mode">Retrieval strategy:</span>
+            <button class="score-mode active" data-mode="cos" type="button" data-i18n="lab.mode.cos">Pooled cosine</button>
+            <button class="score-mode" data-mode="maxsim" type="button" data-i18n="lab.mode.maxsim">Late interaction (MaxSim)</button>
+          </div>
+          <form id="lab-form">
+            <input id="lab-input" type="text" autocomplete="off"
+                   data-i18n-ph="lab.placeholder" placeholder="Ask about my profile, in English, French or German…">
+            <button class="btn btn-primary" type="submit" data-i18n="lab.ask">Search</button>
+          </form>
+          <div class="lab-chips">
+            <button class="chip" type="button">Have you worked on satellites?</button>
+            <button class="chip" type="button">Que faites-vous en ce moment ?</button>
+            <button class="chip" type="button">Haben Sie militärische Erfahrung?</button>
+            <button class="chip" type="button">How can I contact you?</button>
+          </div>
+          <div id="lab-results"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <h2 class="section-title reveal" data-i18n="sec.contact">Contact</h2>
+      <p class="reveal" data-i18n="contact.text">Feel free to reach out.</p>
+      <div class="contact-links reveal">
+        <a class="btn btn-primary" href="mailto:benjamin.gras@polytechnique.edu?subject=%5BSite%20web%5D%20Contact">benjamin.gras@polytechnique.edu</a>
+        <a class="btn btn-ghost btn-wip" href="https://github.com/Benj-admin" target="_blank" rel="noopener">
+          GitHub
+          <span class="wip-badge">
+            <span class="wip-ribbon" data-i18n="contact.wip">Under construction</span>
+            <span class="wip-hammer" aria-hidden="true">🔨</span>
+          </span>
+        </a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/benjamin-gras-37bb97239/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Benjamin Gras</span>
+  </footer>
+
+  <!-- Shown only when printing: a QR code back to the live site (built in common.js). -->
+  <div class="print-card" id="print-card" aria-hidden="true"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/rag.js"></script>
+</body>
+</html>

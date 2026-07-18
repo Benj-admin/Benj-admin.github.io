@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Set the theme before first paint to avoid a flash of the wrong theme. -->
+  <script>
+    document.documentElement.dataset.theme =
+      localStorage.getItem("theme") ||
+      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  </script>
+
+  <title>Quantum Eavesdropper — Benjamin Gras</title>
+  <meta name="description" content="Play Eve against the BB84 quantum key distribution protocol — then watch an AI learn the optimal attack.">
+  <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101014" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%233b5bdb'/><text x='50' y='69' font-family='Georgia, serif' font-size='56' font-weight='700' fill='white' text-anchor='middle'>BG</text></svg>">
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="index.html" class="nav-name">← Benjamin Gras</a>
+    <div class="nav-actions">
+      <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+        <button data-lang="en">EN</button>
+        <button data-lang="fr">FR</button>
+        <button data-lang="de">DE</button>
+      </div>
+      <button id="theme-toggle" class="pill" aria-label="Toggle theme">☾</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section game-head">
+      <h1 class="section-title">Quantum Eavesdropper</h1>
+      <p class="lab-intro" data-g="intro"></p>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="learn" data-g="tab.learn"></button>
+        <button class="tab" data-tab="challenge" data-g="tab.challenge"></button>
+        <button class="tab" data-tab="ai" data-g="tab.ai"></button>
+      </div>
+
+      <!-- Learn + Challenge share the play area -->
+      <div id="panel-play" class="lab-box">
+        <div id="play-start">
+          <p class="lab-note" id="mode-desc"></p>
+          <button class="btn btn-primary" id="btn-start" data-g="btn.start"></button>
+        </div>
+
+        <div id="play-area" hidden>
+          <div class="hud">
+            <div class="hud-item"><span data-g="hud.qubit"></span> <b id="hud-count">1/12</b></div>
+            <div class="hud-item"><span data-g="hud.stolen"></span> <b id="hud-stolen">0</b></div>
+            <div class="hud-item hud-risk">
+              <span data-g="hud.risk"></span> <b id="hud-risk">0%</b>
+              <div class="risk-bar"><div class="risk-fill" id="risk-fill"></div><div class="risk-threshold"></div></div>
+            </div>
+          </div>
+
+          <div class="qubit-stage">
+            <div class="qubit" id="qubit">|ψ⟩</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-ghost act" id="act-pass"><span data-g="act.pass"></span><kbd>1</kbd></button>
+            <button class="btn btn-ghost act" id="act-z"><span data-g="act.z"></span><kbd>2</kbd></button>
+            <button class="btn btn-ghost act" id="act-x"><span data-g="act.x"></span><kbd>3</kbd></button>
+          </div>
+
+          <p class="feedback" id="feedback"></p>
+          <button class="btn btn-primary" id="btn-next" data-g="btn.next" hidden></button>
+        </div>
+
+        <div id="play-end" hidden>
+          <h3 data-g="end.title"></h3>
+          <ul class="end-stats">
+            <li><span data-g="end.sifted"></span> <b id="end-sifted"></b></li>
+            <li><span data-g="end.qber"></span> <b id="end-qber"></b></li>
+          </ul>
+          <p class="verdict" id="verdict"></p>
+          <p class="lab-note"><span data-g="end.high"></span> <b id="end-high">0</b></p>
+          <button class="btn btn-primary" id="btn-replay" data-g="btn.replay"></button>
+        </div>
+      </div>
+
+      <!-- AI panel -->
+      <div id="panel-ai" class="lab-box" hidden>
+        <p class="lab-note" data-g="ai.desc"></p>
+        <button class="btn btn-primary" id="btn-train" data-g="ai.train"></button>
+        <div id="ai-area" hidden>
+          <div class="hud">
+            <div class="hud-item"><span data-g="ai.episode"></span> <b id="ai-episode">0</b></div>
+            <div class="hud-item"><span data-g="ai.bestp"></span> <b id="ai-bestp">–</b></div>
+            <div class="hud-item"><span data-g="ai.max"></span> <b id="ai-max">44%</b></div>
+            <div class="hud-item"><span data-g="ai.haul"></span> <b id="ai-haul">–</b></div>
+            <div class="hud-item"><span data-g="ai.score"></span> <b id="ai-score">–</b></div>
+          </div>
+          <canvas id="ai-curve" height="140"></canvas>
+          <p class="feedback" id="ai-result"></p>
+        </div>
+      </div>
+
+      <p class="lab-note game-foot" data-g="foot"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Benjamin Gras</span>
+  </footer>
+
+  <!-- Shown only when printing: a QR code back to the live site (built in common.js). -->
+  <div class="print-card" id="print-card" aria-hidden="true"></div>
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
