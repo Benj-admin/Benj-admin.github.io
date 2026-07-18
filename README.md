@@ -2,7 +2,6 @@
 
 My personal site — **[live here](https://benj-admin.github.io)**.
 
-![Screenshot](assets/og-image.jpg)
 
 Plain HTML, CSS and JavaScript. No framework, no build step, no backend: what you see is what gets deployed on GitHub Pages.
 
